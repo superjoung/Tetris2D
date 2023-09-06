@@ -40,6 +40,7 @@ public class EnemySpawn : MonoBehaviour
         else
             startSpawnPoint = new Vector3((float)(-0.78 + (-0.78 * (SSp.selectLevelNum / 2 - 1)) + LSpawnSpot.transform.position.x), (float)(0.78 + (0.78 * (SSp.selectLevelNum / 2 - 1))), 0);
 
+        //랜덤블럭 생성 구간
         for (int i = 0; i < SSp.selectLevelNum; i++)
         {
             for (int j = 0; j < SSp.selectLevelNum; j++)
@@ -56,7 +57,7 @@ public class EnemySpawn : MonoBehaviour
             }
             startSpawnPoint += new Vector3(0, (float)-0.78, 0);
         }
-        GameManager.gameStart = true;
+        GameManager.gameStart = true; //본격적인 게임 시작 부분
         StartCoroutine(PopSpawnSpot());
     }
 
@@ -67,16 +68,10 @@ public class EnemySpawn : MonoBehaviour
         {
             StartCoroutine(Lv1());
         }
-
-        if(count == 0 && GameManager.gameStart)
-        {
-            StopAllCoroutines();
-            GameManager.gameStart = false;
-            LSpawnSpot.transform.DOMoveX(PSpawnSpot.transform.position.x, 0.3f).SetEase(Ease.InCubic);
-        }
     }
 
     //왼쪽 스폰 지역에만 블록 생성
+    //게임 시작의 발포
     IEnumerator Lv1()
     {
         var tween = PSpawnSpot.transform.DOMoveX(4, popSpeed).SetEase(Ease.OutElastic);
@@ -96,8 +91,17 @@ public class EnemySpawn : MonoBehaviour
     IEnumerator MoveLSpot()
     {
         var tween = LSpawnSpot.transform.DOMoveX(transform.position.x + 1, GameManager.gameSpeed).SetEase(Ease.OutElastic);
+        Debug.Log("resume Corution");
         yield return tween.WaitForCompletion();
         if (LSpawnSpot.transform.position.x != PSpawnSpot.transform.position.x && count != 0)
+        {
+            Debug.Log("resume Corution");
             StartCoroutine(MoveLSpot());
+        }
+        else if(count == 0 && GameManager.gameStart)
+        {
+            GameManager.gameStart = false;
+            LSpawnSpot.transform.DOMoveX(PSpawnSpot.transform.position.x, 0.3f).SetEase(Ease.InCubic);
+        }
     }
 }
