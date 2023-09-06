@@ -16,6 +16,9 @@ public class EnemySpawn : MonoBehaviour
     public GameObject[,] enemySpawn;
     public Vector3 startSpawnPoint;
     public SpawnSpot SSp;
+    public GameManager GameManager;
+
+    public int count;
 
     void Start()
     {
@@ -24,17 +27,11 @@ public class EnemySpawn : MonoBehaviour
         RSpawnSpot = GameObject.Find("RightSpot");
     }
 
-    //왼쪽 스폰 지역에만 블록 생성
-    IEnumerator Lv1()
-    {
-        var tween = PSpawnSpot.transform.DOMoveX(4, popSpeed).SetEase(Ease.OutElastic);
-        yield return tween.WaitForCompletion();
-        SpawnEnemy();
-    }
-
+    //player보드판 생성 로직
     void SpawnEnemy()
     {
         enemySpawn = new GameObject[SSp.selectLevelNum, SSp.selectLevelNum];
+        count = SSp.selectLevelNum * SSp.selectLevelNum;
         startSpawnPoint = transform.position;
 
         if (SSp.selectLevelNum % 2 == 0)
@@ -49,6 +46,7 @@ public class EnemySpawn : MonoBehaviour
             {
                 if (Random.Range(0f, 100f) > (100 / SSp.selectLevelNum) * (j + 1))
                 {
+                    count--;
                     enemySpawn[i, j] = Instantiate(onPrefab, new Vector3(startSpawnPoint.x + (float)0.78 * j, startSpawnPoint.y, 0), new Quaternion(0, 0, 0, 0));
                     enemySpawn[i, j].transform.parent = LSpawnSpot.transform;
                     SSp.offPrefabs[i, j].tag = "onPrefab";
@@ -58,9 +56,8 @@ public class EnemySpawn : MonoBehaviour
             }
             startSpawnPoint += new Vector3(0, (float)-0.78, 0);
         }
-        LSpawnSpot.transform.localScale = Vector3.zero;
-
-        LSpawnSpot.transform.DOScale(new Vector3(1, 1, 1), popSpeed).SetEase(Ease.OutElastic);
+        GameManager.gameStart = true;
+        StartCoroutine(PopSpawnSpot());
     }
 
     //manager에 speed 및 클리어 갯수에 따라 함수 실행
@@ -70,5 +67,37 @@ public class EnemySpawn : MonoBehaviour
         {
             StartCoroutine(Lv1());
         }
+
+        if(count == 0 && GameManager.gameStart)
+        {
+            StopAllCoroutines();
+            GameManager.gameStart = false;
+            LSpawnSpot.transform.DOMoveX(PSpawnSpot.transform.position.x, 0.3f).SetEase(Ease.InCubic);
+        }
+    }
+
+    //왼쪽 스폰 지역에만 블록 생성
+    IEnumerator Lv1()
+    {
+        var tween = PSpawnSpot.transform.DOMoveX(4, popSpeed).SetEase(Ease.OutElastic);
+        yield return tween.WaitForCompletion();
+        SpawnEnemy();
+    }
+
+    IEnumerator PopSpawnSpot()
+    {
+        LSpawnSpot.transform.localScale = Vector3.zero;
+
+        var tween = LSpawnSpot.transform.DOScale(new Vector3(1, 1, 1), popSpeed).SetEase(Ease.OutElastic);
+        yield return new WaitForSeconds(popSpeed);
+        StartCoroutine(MoveLSpot());
+    }
+
+    IEnumerator MoveLSpot()
+    {
+        var tween = LSpawnSpot.transform.DOMoveX(transform.position.x + 1, GameManager.gameSpeed).SetEase(Ease.OutElastic);
+        yield return tween.WaitForCompletion();
+        if (LSpawnSpot.transform.position.x != PSpawnSpot.transform.position.x && count != 0)
+            StartCoroutine(MoveLSpot());
     }
 }

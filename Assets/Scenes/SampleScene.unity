@@ -222,6 +222,8 @@ MonoBehaviour:
   onPrefab: {fileID: 795544933368788248, guid: 171f814934611ae4982ac3cd5798726b, type: 3}
   startSpawnPoint: {x: 0, y: 0, z: 0}
   SSp: {fileID: 168091046}
+  GameManager: {fileID: 1046017221}
+  count: 0
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -404,6 +406,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameScore: 0
+  gameTime: 0
+  gameSpeed: 1.5
 --- !u!4 &1046017222
 Transform:
   m_ObjectHideFlags: 0

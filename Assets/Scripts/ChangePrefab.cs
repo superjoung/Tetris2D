@@ -10,10 +10,15 @@ public class ChangePrefab : MonoBehaviour
     public SpriteRenderer spriteRenderer;
     public Sprite offPrefabSprite;
     public Sprite onPrefabSprite;
+
+    [SerializeField]
+    public EnemySpawn ES;
+    public GameManager GM;
     // Start is called before the first frame update
     void Start()
     {
-        
+        ES = GameObject.Find("LeftSpot").GetComponent<EnemySpawn>();
+        GM = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
     // Update is called once per frame
@@ -24,10 +29,13 @@ public class ChangePrefab : MonoBehaviour
 
     private void OnMouseDown()
     {
-        Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        hit = Physics2D.Raycast(mousePos, Vector2.zero);
+        if (GM.gameStart)
+        {
+            Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            hit = Physics2D.Raycast(mousePos, Vector2.zero);
 
-        SelectOnCollider();
+            SelectOnCollider();
+        }
     }
 
     private void OnMouseEnter()
@@ -37,7 +45,7 @@ public class ChangePrefab : MonoBehaviour
 
     void HitOnSelected()
     {
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton(0) && GM.gameStart)
         {
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             hit = Physics2D.Raycast(mousePos, Vector2.zero);
@@ -53,7 +61,9 @@ public class ChangePrefab : MonoBehaviour
 
         if (hit.collider.CompareTag("offPrefab"))
         {
+            //태그 변경
             hit.collider.tag = "onPrefab";
+            ES.count--;
             spriteRenderer = hit.collider.GetComponent<SpriteRenderer>();
             if (spriteRenderer.sprite.name == onPrefabSprite.name)
             {
@@ -69,6 +79,7 @@ public class ChangePrefab : MonoBehaviour
         else if (hit.collider.CompareTag("onPrefab"))
         {
             hit.collider.tag = "offPrefab";
+            ES.count++;
             spriteRenderer = hit.collider.GetComponent<SpriteRenderer>();
             if (spriteRenderer.sprite.name == onPrefabSprite.name)
             {

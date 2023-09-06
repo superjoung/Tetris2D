@@ -5,9 +5,10 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     [SerializeField]
-    private int gameScore = 0;
-    private int gameTime = 0;
-    private float gameSpeed;
+    public int gameScore = 0;
+    public int gameTime = 0;
+    public float gameSpeed;
+    public bool gameStart = false;
 
     void Start()
     {
