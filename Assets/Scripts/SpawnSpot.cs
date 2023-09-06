@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using Unity.VisualScripting;
 
 public class SpawnSpot : MonoBehaviour
@@ -12,9 +13,8 @@ public class SpawnSpot : MonoBehaviour
 
     public GameObject spawnSpotPrefab;
     public GameObject offPrefab;
+    [SerializeField]
     public GameObject[,] offPrefabs;
-
-    public RaycastHit2D hit;
 
     void Start()
     {
@@ -47,30 +47,6 @@ public class SpawnSpot : MonoBehaviour
                 offPrefabs[i, j].transform.parent = spawnSpotPrefab.transform;
             }
             startSpawnPoint += new Vector3(0, (float)-0.78, 0);
-        }
-    }
-
-    void HitOnSelected()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            hit = Physics2D.Raycast(mousePos, Vector2.zero);
-
-            SelectOnCollider();    
-        }
-    }
-
-    void SelectOnCollider()
-    {
-        if (hit.collider.CompareTag("offPrefab"))
-        {
-
-        }
-
-        else if (hit.collider.CompareTag("onPrefab"))
-        {
-
         }
     }
 }

@@ -51,6 +51,7 @@ public class EnemySpawn : MonoBehaviour
                 {
                     enemySpawn[i, j] = Instantiate(onPrefab, new Vector3(startSpawnPoint.x + (float)0.78 * j, startSpawnPoint.y, 0), new Quaternion(0, 0, 0, 0));
                     enemySpawn[i, j].transform.parent = LSpawnSpot.transform;
+                    SSp.offPrefabs[i, j].tag = "onPrefab";
                 }
                 else
                     break;
