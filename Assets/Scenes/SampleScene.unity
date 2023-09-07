@@ -215,8 +215,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 036f07129d86da54a9dccf9a40a2403c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  popSpeed: 1.5
+  popSpeed: 0.5
   destorySpeed: 0.3
+  moveSpeed: 0.1
   LSpawnSpot: {fileID: 0}
   RSpawnSpot: {fileID: 0}
   PSpawnSpot: {fileID: 0}
@@ -408,7 +409,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameScore: 0
   gameTime: 0
-  gameSpeed: 1.5
+  gameSpeed: 0.5
   gameStart: 0
 --- !u!4 &1046017222
 Transform:

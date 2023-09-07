@@ -26,18 +26,18 @@ public class SpawnSpot : MonoBehaviour
         
     }
 
-    void SpotSpawn()
+    public void SpotSpawn()
     {
         spawnSpotPrefab = GameObject.Find("SpawnSpot");
         offPrefabs = new GameObject[selectLevelNum, selectLevelNum];
 
         //짝수 0.39 초기값 2증가량에 따라 0.78 차증감
         if (selectLevelNum % 2 == 0)
-            startSpawnPoint = new Vector3((float)(-0.39 + (-0.78 * (selectLevelNum / 2 - 1))), (float)(0.39 + (0.78 * (selectLevelNum / 2 - 1))), 0);
+            startSpawnPoint = new Vector3((float)(-0.39 + (-0.78 * (selectLevelNum / 2 - 1))), (float)(0.39 + (0.78 * (selectLevelNum / 2 - 1))), 0) + spawnSpotPrefab.transform.position;
 
         //홀수 0.78 초기값 2증가량에 따라 0.78 차증감
         else
-            startSpawnPoint = new Vector3((float)(-0.78 + (-0.78 * (selectLevelNum / 2 - 1))), (float)(0.78 + (0.78 * (selectLevelNum / 2 - 1))), 0);
+            startSpawnPoint = new Vector3((float)(-0.78 + (-0.78 * (selectLevelNum / 2 - 1))), (float)(0.78 + (0.78 * (selectLevelNum / 2 - 1))), 0) + spawnSpotPrefab.transform.position;
 
         for (int i = 0; i < selectLevelNum; i++)
         {
