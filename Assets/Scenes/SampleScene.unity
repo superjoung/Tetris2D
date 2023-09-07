@@ -216,6 +216,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   popSpeed: 1.5
+  destorySpeed: 0.3
   LSpawnSpot: {fileID: 0}
   RSpawnSpot: {fileID: 0}
   PSpawnSpot: {fileID: 0}
@@ -408,6 +409,7 @@ MonoBehaviour:
   gameScore: 0
   gameTime: 0
   gameSpeed: 1.5
+  gameStart: 0
 --- !u!4 &1046017222
 Transform:
   m_ObjectHideFlags: 0

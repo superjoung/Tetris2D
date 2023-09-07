@@ -9,6 +9,7 @@ public class EnemySpawn : MonoBehaviour
     [SerializeField]
     //public GameManager Manager;
     public float popSpeed;
+    public float destorySpeed;
     public GameObject LSpawnSpot;
     public GameObject RSpawnSpot;
     public GameObject PSpawnSpot; //x축 4 차증감
@@ -25,6 +26,23 @@ public class EnemySpawn : MonoBehaviour
         PSpawnSpot = GameObject.Find("SpawnSpot");
         LSpawnSpot = GameObject.Find("LeftSpot");
         RSpawnSpot = GameObject.Find("RightSpot");
+    }
+
+    void SprayFrefabs()
+    {
+        for(int i = 0; i < SSp.selectLevelNum; i++)
+        {
+            for(int j = 0; j < SSp.selectLevelNum; j++)
+            {
+                if(enemySpawn[i, j] != null)
+                {
+                    Vector3 suvPos = enemySpawn[i, j].transform.position + new Vector3(Random.Range(-3f, 3f), Random.Range(-3f, 3f), 0);
+                    enemySpawn[i, j].transform.DOMove(suvPos, destorySpeed).SetEase(Ease.OutQuint);
+                }
+                Vector3 suvPos2 = SSp.offPrefabs[i, j].transform.position + new Vector3(Random.Range(-3f, 3f), Random.Range(-3f, 3f), 0);
+                SSp.offPrefabs[i, j].transform.DOMove(suvPos2, destorySpeed).SetEase(Ease.OutQuint);
+            }
+        }
     }
 
     //player보드판 생성 로직
@@ -74,9 +92,9 @@ public class EnemySpawn : MonoBehaviour
     //게임 시작의 발포
     IEnumerator Lv1()
     {
-        var tween = PSpawnSpot.transform.DOMoveX(4, popSpeed).SetEase(Ease.OutElastic);
+        var tween = PSpawnSpot.transform.DOMoveX(4, popSpeed).SetEase(Ease.OutElastic); //PSpawnSpot 오른쪽으로 이동
         yield return tween.WaitForCompletion();
-        SpawnEnemy();
+        SpawnEnemy(); //pop 시작하는함수
     }
 
     IEnumerator PopSpawnSpot()
@@ -102,6 +120,22 @@ public class EnemySpawn : MonoBehaviour
         {
             GameManager.gameStart = false;
             LSpawnSpot.transform.DOMoveX(PSpawnSpot.transform.position.x, 0.3f).SetEase(Ease.InCubic);
+            yield return new WaitForSeconds(0.3f);
+            StartCoroutine(CompleteSpot());
         }
+    }
+
+    IEnumerator CompleteSpot()
+    {
+        Sequence destorySeq = DOTween.Sequence();
+        destorySeq.Append(LSpawnSpot.transform.DOScale(new Vector3(0.3f, 0.3f, 0.3f), destorySpeed)).SetEase(Ease.InSine);
+        destorySeq.Join(PSpawnSpot.transform.DOScale(new Vector3(0.3f, 0.3f, 0.3f), destorySpeed)).SetEase(Ease.InSine);
+        destorySeq.Append(LSpawnSpot.transform.DOScale(new Vector3(1.8f, 1.8f, 1.8f), destorySpeed)).SetEase(Ease.InSine);
+        destorySeq.Join(PSpawnSpot.transform.DOScale(new Vector3(1.8f, 1.8f, 1.8f), destorySpeed)).SetEase(Ease.InSine);
+        destorySeq.Append(LSpawnSpot.transform.DOScale(new Vector3(1, 1, 1), destorySpeed)).SetEase(Ease.InSine);
+        destorySeq.Join(PSpawnSpot.transform.DOScale(new Vector3(1, 1, 1), destorySpeed)).SetEase(Ease.InSine);
+        var tween = destorySeq.Play();
+        yield return tween.WaitForCompletion();
+        SprayFrefabs();
     }
 }
