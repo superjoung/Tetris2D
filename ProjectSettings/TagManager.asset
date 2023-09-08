@@ -6,6 +6,9 @@ TagManager:
   tags:
   - onPrefab
   - offPrefab
+  - GameStart
+  - GameOption
+  - GameTutorial
   layers:
   - Default
   - TransparentFX
