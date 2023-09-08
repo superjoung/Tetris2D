@@ -1,4 +1,4 @@
-using DG.Tweening;
+    using DG.Tweening;
 //using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -152,12 +152,18 @@ public class EnemySpawn : MonoBehaviour
         var tween = LSpawnSpot.transform.DOMoveX(transform.position.x + 1, GameManager.gameSpeed).SetEase(Ease.OutElastic);
         Debug.Log("resume Corution");
         yield return tween.WaitForCompletion();
-        if (LSpawnSpot.transform.position.x != PSpawnSpot.transform.position.x && count != 0)
+        if (LSpawnSpot.transform.position.x != PSpawnSpot.transform.position.x && count != 0) //진행중
         {
             Debug.Log("resume Corution");
             StartCoroutine(MoveLSpot());
         }
-        else if(count == 0 && GameManager.gameStart)
+        else if(LSpawnSpot.transform.position.x == PSpawnSpot.transform.position.x) //블럭맞추기 실패
+        {
+            GameManager.gameLife--;
+            GameManager.gameStart = false;
+            StartCoroutine(CompleteSpot());
+        }
+        else if(count == 0 && GameManager.gameStart) //블럭맞추기 성공
         {
             GameManager.gameStart = false;
             LSpawnSpot.transform.DOMoveX(PSpawnSpot.transform.position.x, moveSpeed).SetEase(Ease.InCubic);
