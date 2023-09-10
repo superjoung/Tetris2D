@@ -26,17 +26,13 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        
+        talkStart = true;
+        StartTalk(firstBossObj);
+
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            talkStart = true;
-            StartTalk(firstBossObj);
-        }
-
         if (Input.GetMouseButtonDown(0) && talkStart)
             StartTalk(firstBossObj);
 

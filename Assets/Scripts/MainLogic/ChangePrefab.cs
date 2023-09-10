@@ -8,6 +8,7 @@ public class ChangePrefab : MonoBehaviour
     public RaycastHit2D hit;
 
     public SpriteRenderer spriteRenderer;
+    public SpriteRenderer offSpriteRender;
     public Sprite offPrefabSprite;
     public Sprite onPrefabSprite;
 
@@ -19,6 +20,8 @@ public class ChangePrefab : MonoBehaviour
     {
         ES = GameObject.Find("LeftSpot").GetComponent<EnemySpawn>();
         GM = GameObject.Find("GameManager").GetComponent<GameManager>();
+        offSpriteRender = gameObject.transform.GetComponent<SpriteRenderer>();
+        offPrefabSprite = offSpriteRender.sprite;
     }
 
     // Update is called once per frame

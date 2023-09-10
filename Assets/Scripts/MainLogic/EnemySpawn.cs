@@ -11,6 +11,7 @@ public class EnemySpawn : MonoBehaviour
     public float popSpeed;
     public float destorySpeed;
     public float moveSpeed;
+    public float blockWdith;
     public GameObject LSpawnSpot;
     public GameObject RSpawnSpot;
     public GameObject PSpawnSpot; //x축 4 차증감
@@ -84,10 +85,10 @@ public class EnemySpawn : MonoBehaviour
         startSpawnPoint = transform.position;
 
         if (SSp.selectLevelNum % 2 == 0)
-            startSpawnPoint = new Vector3((float)(-0.39 + (-0.78 * (SSp.selectLevelNum / 2 - 1)) + LSpawnSpot.transform.position.x), (float)(0.39 + (0.78 * (SSp.selectLevelNum / 2 - 1))), 0);
+            startSpawnPoint = new Vector3((float)(-blockWdith/2 + (-blockWdith * (SSp.selectLevelNum / 2 - 1)) + LSpawnSpot.transform.position.x), (float)(blockWdith/2 + (blockWdith * (SSp.selectLevelNum / 2 - 1))), 0);
 
         else
-            startSpawnPoint = new Vector3((float)(-0.78 + (-0.78 * (SSp.selectLevelNum / 2 - 1)) + LSpawnSpot.transform.position.x), (float)(0.78 + (0.78 * (SSp.selectLevelNum / 2 - 1))), 0);
+            startSpawnPoint = new Vector3((float)(-blockWdith + (-blockWdith * (SSp.selectLevelNum / 2 - 1)) + LSpawnSpot.transform.position.x), (float)(blockWdith + (blockWdith * (SSp.selectLevelNum / 2 - 1))), 0);
 
         //랜덤블럭 생성 구간
         for (int i = 0; i < SSp.selectLevelNum; i++)
@@ -97,14 +98,14 @@ public class EnemySpawn : MonoBehaviour
                 if (Random.Range(0f, 100f) > (100 / SSp.selectLevelNum) * (j + 1))
                 {
                     count--;
-                    enemySpawn[i, j] = Instantiate(onPrefab, new Vector3(startSpawnPoint.x + (float)0.78 * j, startSpawnPoint.y, 0), new Quaternion(0, 0, 0, 0));
+                    enemySpawn[i, j] = Instantiate(onPrefab, new Vector3(startSpawnPoint.x + (float)blockWdith * j, startSpawnPoint.y, 0), new Quaternion(0, 0, 0, 0));
                     enemySpawn[i, j].transform.parent = LSpawnSpot.transform;
                     SSp.offPrefabs[i, j].tag = "onPrefab";
                 }
                 else
                     break;
             }
-            startSpawnPoint += new Vector3(0, (float)-0.78, 0);
+            startSpawnPoint += new Vector3(0, (float)-blockWdith, 0);
         }
         GameManager.gameStart = true; //본격적인 게임 시작 부분
         StartCoroutine(PopSpawnSpot());
@@ -115,6 +116,7 @@ public class EnemySpawn : MonoBehaviour
     {
         if (Input.GetKeyUp(KeyCode.W)) // 1
         {
+            Debug.Log("Start");
             StartCoroutine(Lv1());
         }
     }
@@ -125,6 +127,7 @@ public class EnemySpawn : MonoBehaviour
     {
         if (GameManager.gameScore == 0)
         {
+            SSp.SpotSpawn();
             var tween = PSpawnSpot.transform.DOMoveX(4, popSpeed).SetEase(Ease.OutElastic); //PSpawnSpot 오른쪽으로 이동
             yield return tween.WaitForCompletion();
         }

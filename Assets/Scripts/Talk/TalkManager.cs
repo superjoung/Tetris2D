@@ -16,9 +16,12 @@ public class TalkManager : MonoBehaviour
     void Generator()
     {
         // TestCase
-        talkDate.Add(1000, new string[] 
-        { "미지에 세계의 온걸 환영한다.", 
-          "너는 이 세계를 구하기 위해 온 용사다." });
+        talkDate.Add(1000, new string[]
+        {"큰일이야 큰일이야! 지금 게임을 준비하던 오브젝트가 주요 문서를 들고 도망갔어",
+         "이름이 뭐더라... (뒤적뒤적)폴더 이름이 과제?.. 라고 되어있던데",
+         "아무튼! 아직 멀지않은 곳에 있을테니까 앞에 있는 벽을 부수고 쫒아가야해",
+         "근데 문제가 하나있어.. 우리가 가지고 있는건 예쁜 정사각형을 부쉬는 도구밖에 없어",
+         "여기서 너의 도움이 필요해.. 너가 벽을 만들어줄래?"});
     }
 
     public string GetTalk(int date, int talkIndex)
