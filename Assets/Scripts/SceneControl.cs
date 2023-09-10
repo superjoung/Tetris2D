@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class SceneControl : MonoBehaviour
 {
@@ -43,6 +44,7 @@ public class SceneControl : MonoBehaviour
         if (boundObj.transform.CompareTag("GameStart"))
         {
             Debug.Log("Game Start");
+            SceneManager.LoadScene(0);
         }
 
         else if (boundObj.transform.CompareTag("GameOption"))

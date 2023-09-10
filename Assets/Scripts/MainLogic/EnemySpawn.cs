@@ -162,6 +162,7 @@ public class EnemySpawn : MonoBehaviour
             GameManager.gameLife--;
             GameManager.gameStart = false;
             StartCoroutine(CompleteSpot());
+            StartCoroutine(CameraMoving());
         }
         else if(count == 0 && GameManager.gameStart) //블럭맞추기 성공
         {
@@ -190,5 +191,18 @@ public class EnemySpawn : MonoBehaviour
     {
         yield return new WaitForSeconds(timeSet);
         DestroyChildObj();
+    }
+
+    IEnumerator CameraMoving() // 블럭 맞추지 못했을 때 카메라 움직임
+    {
+        Sequence Seq = DOTween.Sequence();
+        Seq.Append(Camera.main.transform.DOMoveX(Random.Range(-0.5f, 0.5f), 0.1f).SetEase(Ease.OutElastic));
+        Seq.Join(Camera.main.transform.DOMoveY(Random.Range(-0.5f, 0.5f), 0.1f).SetEase(Ease.OutElastic));
+        Seq.Append(Camera.main.transform.DOMoveX(Random.Range(-0.5f, 0.5f), 0.1f).SetEase(Ease.OutElastic));
+        Seq.Join(Camera.main.transform.DOMoveY(Random.Range(-0.5f, 0.5f), 0.1f).SetEase(Ease.OutElastic));
+        Seq.Append(Camera.main.transform.DOMoveX(0, 0.1f).SetEase(Ease.OutElastic));
+        Seq.Join(Camera.main.transform.DOMoveY(0, 0.1f).SetEase(Ease.OutElastic));
+        var tween = Seq.Play();
+        yield return tween.WaitForCompletion();
     }
 }
