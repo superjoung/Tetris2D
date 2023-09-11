@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     public TalkManager TM;
     public int talkIndex;
     public GameObject firstBossObj;
+    public GameObject talkObj;
     public GameObject talkPanel;
     public Text UITalkText;
 
@@ -27,14 +28,16 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         talkStart = true;
-        StartTalk(firstBossObj);
-
+        talkObj = firstBossObj;
+        StartTalk(talkObj);
     }
 
     void Update()
     {
         if (Input.GetMouseButtonDown(0) && talkStart)
-            StartTalk(firstBossObj);
+        {
+            StartTalk(talkObj);
+        }
 
         HpManage();
     }
