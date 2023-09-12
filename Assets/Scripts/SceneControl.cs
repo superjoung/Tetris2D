@@ -53,7 +53,7 @@ public class SceneControl : MonoBehaviour
         if (boundObj.transform.CompareTag("GameStart"))
         {
             Debug.Log("Game Start");
-            SceneManager.LoadScene(0);
+            SceneManager.LoadScene(1);
         }
 
         else if (boundObj.transform.CompareTag("GameOption"))
@@ -77,7 +77,7 @@ public class SceneControl : MonoBehaviour
         // 해당 스테이지 튜토리얼 진행을 원할 시 씬변경
         else if (boundObj.transform.CompareTag("TutoralStart"))
         {
-            Debug.Log("Start Tutorial");
+            SceneManager.LoadScene(2);
         }
 
         else if (boundObj.transform.CompareTag("SelectTutorial"))

@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GameLoby.unity
     guid: 8d00d516cc2ec5d4e8b01422307fbcf3
+  - enabled: 1
+    path: Assets/Scenes/Tutorial.unity
+    guid: c5dc8ad1b82056a46aaea5c1c8a4cdf4
   m_configObjects: {}

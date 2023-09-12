@@ -3,11 +3,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class EnemySpawn : MonoBehaviour
 {
     [SerializeField]
-    //public GameManager Manager;
     public float popSpeed;
     public float destorySpeed;
     public float moveSpeed;
@@ -28,6 +28,9 @@ public class EnemySpawn : MonoBehaviour
         PSpawnSpot = GameObject.Find("SpawnSpot");
         LSpawnSpot = GameObject.Find("LeftSpot");
         RSpawnSpot = GameObject.Find("RightSpot");
+        Scene scene = SceneManager.GetActiveScene();
+        if (scene.name == "SampleScene")
+            StartCoroutine(Lv1());
     }
 
     void SprayFrefabs() // 7
@@ -60,7 +63,7 @@ public class EnemySpawn : MonoBehaviour
         StartCoroutine(OnWaitForSecond(destorySpeed));
     }
 
-    void DestroyChildObj() // 9
+    public void DestroyChildObj() // 9
     {
         for (int i = 0; i < LSpawnSpot.transform.childCount; i++)
         {
@@ -114,7 +117,7 @@ public class EnemySpawn : MonoBehaviour
     //manager에 speed 및 클리어 갯수에 따라 함수 실행
     void Update()
     {
-        if (Input.GetKeyUp(KeyCode.W)) // 1
+        if (Input.GetKeyUp(KeyCode.W) && GameManager.tStart) // 1
         {
             Debug.Log("Start");
             StartCoroutine(Lv1());

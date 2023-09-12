@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using Unity.Burst.CompilerServices;
 using UnityEngine;
 
@@ -15,6 +16,7 @@ public class ChangePrefab : MonoBehaviour
     [SerializeField]
     public EnemySpawn ES;
     public GameManager GM;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -32,7 +34,7 @@ public class ChangePrefab : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (GM.gameStart)
+        if (GM.gameStart || GM.tStart)
         {
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             hit = Physics2D.Raycast(mousePos, Vector2.zero);
@@ -48,7 +50,7 @@ public class ChangePrefab : MonoBehaviour
 
     void HitOnSelected()
     {
-        if (Input.GetMouseButton(0) && GM.gameStart)
+        if (Input.GetMouseButton(0) && (GM.gameStart || GM.tStart))
         {
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             hit = Physics2D.Raycast(mousePos, Vector2.zero);
@@ -66,6 +68,7 @@ public class ChangePrefab : MonoBehaviour
         {
             //태그 변경
             hit.collider.tag = "onPrefab";
+            GM.tCount++;
             ES.count--;
             spriteRenderer = hit.collider.GetComponent<SpriteRenderer>();
             if (spriteRenderer.sprite.name == onPrefabSprite.name)
@@ -82,6 +85,7 @@ public class ChangePrefab : MonoBehaviour
         else if (hit.collider.CompareTag("onPrefab"))
         {
             hit.collider.tag = "offPrefab";
+            GM.tCount--;
             ES.count++;
             spriteRenderer = hit.collider.GetComponent<SpriteRenderer>();
             if (spriteRenderer.sprite.name == onPrefabSprite.name)
