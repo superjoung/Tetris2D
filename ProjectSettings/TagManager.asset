@@ -9,6 +9,9 @@ TagManager:
   - GameStart
   - GameOption
   - GameTutorial
+  - SelectStage
+  - TutoralStart
+  - SelectTutorial
   layers:
   - Default
   - TransparentFX

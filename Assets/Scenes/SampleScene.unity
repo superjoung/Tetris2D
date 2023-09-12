@@ -480,7 +480,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
+  m_BackGroundColor: {r: 0.09411765, g: 0.09411765, b: 0.09411765, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -896,6 +896,7 @@ MonoBehaviour:
   TM: {fileID: 256495564}
   talkIndex: 0
   firstBossObj: {fileID: 1794079499086184233, guid: f6736aef7c66a884d8a2cb345e4821db, type: 3}
+  talkObj: {fileID: 0}
   talkPanel: {fileID: 1053311308}
   UITalkText: {fileID: 1123556782}
   hpUIText: {fileID: 1467037945}

@@ -9,7 +9,11 @@ using UnityEngine.SceneManagement;
 public class SceneControl : MonoBehaviour
 {
     public float popSpeed;
+    public float stageNum = 1;
+    public GameObject MainPanel;
     public GameObject OptionPanel;
+    public GameObject SelectStagePanel;
+    public GameObject SelectTutorialPanel;
 
     // Start is called before the first frame update
     void Start()
@@ -26,6 +30,11 @@ public class SceneControl : MonoBehaviour
     public void ExitOptionPanel()
     {
         OptionPanel.SetActive(false);
+    }
+
+    public void ExitSelectTutoPanel()
+    {
+        SelectTutorialPanel.SetActive(false);
     }
 
     public void ChickButton()
@@ -56,6 +65,24 @@ public class SceneControl : MonoBehaviour
         else if (boundObj.transform.CompareTag("GameTutorial"))
         {
             Debug.Log("Game Tutorial");
+        }
+
+        else if (boundObj.transform.CompareTag("SelectStage")) 
+        {
+            Debug.Log("Select Stage");
+            MainPanel.SetActive(false);
+            SelectStagePanel.SetActive(true);
+        }
+
+        // 해당 스테이지 튜토리얼 진행을 원할 시 씬변경
+        else if (boundObj.transform.CompareTag("TutoralStart"))
+        {
+            Debug.Log("Start Tutorial");
+        }
+
+        else if (boundObj.transform.CompareTag("SelectTutorial"))
+        {
+            SelectTutorialPanel.SetActive(true);
         }
     }
 }

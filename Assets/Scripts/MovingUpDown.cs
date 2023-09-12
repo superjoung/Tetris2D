@@ -20,8 +20,8 @@ public class MovingUpDown : MonoBehaviour
     {
         anchor = false;
         Sequence seq = DOTween.Sequence();
-        seq.Append(transform.GetComponent<RectTransform>().DOAnchorPosY(-15f, 1f).SetEase(Ease.Linear));
-        seq.Append(transform.GetComponent<RectTransform>().DOAnchorPosY(-30f, 0.5f).SetEase(Ease.OutElastic));
+        seq.Append(transform.GetComponent<RectTransform>().DOAnchorPosY(15f, 1f).SetEase(Ease.Linear));
+        seq.Append(transform.GetComponent<RectTransform>().DOAnchorPosY(30f, 0.5f).SetEase(Ease.OutElastic));
         var tween = seq.Play();
         yield return tween.WaitForCompletion();
         anchor = true;
